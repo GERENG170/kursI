@@ -1,0 +1,48 @@
+<style>
+
+     .box1 { 
+       background: #f0f0f0; 
+      
+       padding: 40px; 
+       height: 4000px;
+       margin: 0px;
+       margin-top:80px;
+       box-shadow: 0 0 10px black ;  }
+     .card {
+      display:inline-block;
+      margin-left:60px;
+      transition: .5s;
+      box-shadow: 0 0 10px black; 
+      margin-top: 50px;} 
+    .card:hover{
+        transform: translate(-10px,-10px);
+        box-shadow: 10px 10px 15px ; }
+      
+</style>
+   <div class="box1">    
+     <% @colls.each do |coll| %>
+          
+   <div class="card" style="width : 18rem;">
+         <% if coll.image.attached?%>
+          <img class="card-img-top"<%=image_tag(coll.image)%>
+          <% end %>
+   <div class="card-body">
+          <h5 class="card-title"><%=coll.title%></h5>
+          <a class="btn btn-primary"<%= link_to 'Show', coll_path(coll) %>  </a> 
+          <%=link_to like_coll_path(coll),class: "like", method: :put do %>
+           <button type="button" class="btn btn-info" aria-label="left Align">
+           <span class="glyphicon glyphicon-thumbs-up glyphicon-align-center" aria-hidden="true"></span>
+           <span class="badge"><%=coll.get_upvotes.size%></span>
+           </button>
+           <% end %>
+             <%=link_to unlike_coll_path(coll),class: "like", method: :put do %>
+           <button type="button" class="btn btn-danger" aria-label="left Align">
+           <span class="glyphicon glyphicon-thumbs-up glyphicon-align-center" aria-hidden="true"></span>
+           <span class="badge"><%=coll.get_downvotes.size%></span>
+           </button>
+           <% end %>
+</div> 
+</div>
+<%end%>
+  
+

@@ -1,0 +1,58 @@
+<style>
+.fieldimage{
+ height:100px;
+ width:400px;
+ background-color: #cccccc;
+ border: 10px ;
+ border-color: black;
+ 
+
+}
+</style>
+
+<script src="mdb.js"></script>
+<script src="jquery.js"></script>
+<script src="bootstrap.js"></script>
+<script src="popper.js"></script>
+
+    
+
+<%= form_with(model: coll, local: true) do |form| %>
+  <% if coll.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(coll.errors.count, "error") %> prohibited this coll from being saved:</h2>
+
+      <ul>
+        <% coll.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+   <div class="form-group">
+   <%= form.select :all_topics, options_for_select([["Select topic", ""], "Auto", "Work", "Beverages", "Books", "Minerals","
+Animals", "Art","Clothing"]), :class => 'form-control' %>
+  </div>
+
+  <div class="form-group">
+     <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" placeholder="name" <%= form.text_area :title %></textarea>
+  </div>
+
+  <div class="form-group formimage">
+  
+   <input class="fieldimage" <%=form.file_field :image%></input>
+  </div>
+
+  <div class="form-group">
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="body" <%= form.text_area :body %></textarea>
+  </div>
+ 
+
+
+  <div class="form-group">
+     
+     <button type="submit" class="btn btn-primary btn-lg btn-block" >Create collection</button>
+     
+  </div>
+<% end %>

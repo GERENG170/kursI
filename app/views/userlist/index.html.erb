@@ -1,0 +1,41 @@
+<style> 
+  .box1 { 
+       background: #f0f0f0; 
+       
+       padding: 40px; 
+       height: 4000px;
+       margin: 0px;
+       margin-top:80px;
+       box-shadow: 0 0 10px black ;  }
+    .table{
+        width: 86%;
+    }
+</style>
+
+
+<div class="box1">
+<table  class="table table-hover">
+<thead >
+      <tr>       
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Create Data</th>
+        <th>Last Updated</th>
+        <th>Delete<th>         
+       </thead>
+<%= @users = User.all%>
+<% @users.each do |user| %>  
+<tbody>
+      <tr>
+        <td><%=link_to user.id, user_path(user)%></td>  
+        <td><%=user.name%></td>    
+        <td><%=user.email%></td>
+        <td><%=user.created_at%></td>
+        <td><%=user.updated_at%></td>
+        <td><a class="btn btn-outline-danger"<%=link_to "Delete", user_path_path(user),  method: :delete %> </a></td>  
+     </tr> 
+     <%end%>
+</table>
+<br>
+</div>

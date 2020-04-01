@@ -1,0 +1,176 @@
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<style>
+.box1 { 
+       background: #f0f0f0; 
+       padding: 40px; 
+       height: 4000px;
+       box-shadow: 0 0 10px black ;  }
+        h1 {
+    border: 1px solid black;
+    padding: auto;
+    word-wrap:break-word;
+    display: block;
+    background-color: #ffffff;
+    border-radius: 6px;
+    text-align: center;
+    font-family: 'Anton', sans-serif;
+    font-family: 'Play', sans-serif;
+    font-size: 20px;
+    width: 400px;
+  
+   }
+ 
+   .form123 {
+     display:none;  
+   }
+   .form_add_field {
+     display:none;
+
+   }
+   .btn-item {
+      left: 10px;  
+   }
+   
+ 
+       </style>
+       
+
+
+       
+      
+       
+<div  class="box1">
+
+<p id="notice"><%= notice %></p>
+
+<% if @coll.image.attached?%>
+
+  <div style="width:400px; height:auto;" class = "imagecoll" >
+<%=image_tag(@coll.image,style:'width:100%')%>
+</div>
+<% end %>
+
+
+
+
+<h1>
+  <strong><%= @coll.title %>:</strong>
+
+  <%= @coll.body %>
+
+  <p>Topic:<%=@coll.all_topics%></p>
+</h1>
+
+
+
+<% if user_signed_in?%>
+<a style="right: 50px;top: 210px;position: absolute; color: white;"  class="btn btn-dark", color="white"<%= link_to 'Back', colls_path %> </a>
+
+<% if current_user.admin? || current_user.id == @coll.user_id %> 
+<a style="right: 198px;top: 210px;position: absolute; color: white;" class="btn btn-info", color="white"<%= link_to 'Edit', edit_coll_path(@coll) %> </a>
+<a style="right: 276px;top: 210px;position: absolute; color: white;" class="btn btn-danger", color="white"<%= link_to 'Delete collection', @coll_path, method: :delete %></a>
+ <%end%>
+  <%end%>
+<a  class="btn btn-info btn-add" >Add field</a>
+
+
+ 
+ <%= form_with model: [@coll, @dop] do |form| %>
+    <%= form.text_field :tfield %>
+    <%= form.text_field :name %>
+    <%= form.submit "Dop" %> 
+ <% end %>
+
+ <div id="dop_pane">
+ <% @dops.each do |dop|%>
+<%= render 'dops/dop', dop: dop%>
+<% end %>
+</div>
+
+
+
+<script>
+$( ".btn-add" ).click(function() {
+  $( ".form_add_field" ).slideToggle( "slow" );
+});
+</script>
+
+ 
+  <table  class="table table-striped w-auto">
+  
+  
+  <tbody>
+    <tr> 
+    <% @coll.items.each do |item|%>
+      <td><%=item.id%></th>
+      <td><%= link_to item.title, coll_item_path(item)%></td>
+      <td><%=link_to item.body , coll_item_path(item)%></td>
+      <td><%= item.created_at%></td>
+      <% if user_signed_in?%>
+     <% if current_user.admin? || current_user.id == @coll.user_id %> 
+      <td><%= link_to 'Destroy Item', [item.coll, item],
+               method: :delete,
+               data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    <% end %>
+    <% end %>
+    </tbody>
+    <% end %>
+    </table>
+    
+
+
+    <% if user_signed_in?%>
+    <% if current_user.admin? || current_user.id == @coll.user_id %> 
+    <button  class="btn btn-info btn-item" >Create item</button>
+<%=  form_with(model: [ @coll, @coll.items.build ], local: true) do |form| %>
+  <div class = 'form123'>
+<div class="form-group">
+  <%=form.file_field :image%>
+  </div>
+  <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+  </div>
+     <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" <%= form.text_field :title %></textarea>
+  </div>
+   <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-default">Body</span>
+  </div>
+  <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" <%= form.text_area :body %></textarea>
+  </div>
+   
+   <p>
+   <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroup-sizing-default">Tags</span>
+  </div>
+  <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"  <%= form.text_field :all_tags%></textarea>
+</div>
+
+<strong> Additional fields</strong>
+
+
+  
+
+
+
+   <p>
+<button type="submit" class="btn btn-success">Create</button>
+</p>
+</div>
+<% end %>
+<% end %>
+<script>
+$( "button" ).click(function() {
+  $( ".form123" ).slideToggle( "slow" );
+});
+</script>
+ <% end %>
+
+
+</div>
+
+
+

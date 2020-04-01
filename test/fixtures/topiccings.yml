@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  coll: one
+  topic: one
+
+two:
+  coll: two
+  topic: two
