@@ -25,6 +25,7 @@
             }
 
        </style>
+
        
 <div class="box1">
 
@@ -32,12 +33,14 @@
 
 
 
+<% @item.tags.each do |tag|%>
 <div class="alert alert-primary" role="alert">
-  Tags: <%=@item.all_tags%>
+  <%=t('ItSh.tgName')%><%=tag.name %>
 </div>
+<%end%>
 
 <div class="alert alert-info" role="alert">
-  Topic:<%=@item.coll.all_topics%>
+  <%=t('ItSh.tpName')%><%=@item.coll.all_topics%>
 </div>
 
 <% if @item.image.attached?%>
@@ -48,15 +51,42 @@
 <% end %>
 
 <h1>
-  <strong><%= @item.title %>:</strong>
+  <strong><%= markdown @item.title %></strong>
 
-  <%= @item.body %>
+  <%=markdown @item.body %>
 </h1>
+
+<script>
+window.addEventListener('popstate',function(event){location.reload(true);});
+var max = 0;
+var oldHash = window.location.pathname;
+$(document).ready(function repeatRequest() {
+    if (oldHash != window.location.pathname) return;
+    else{
+    var body, id;
+    $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: "show",
+        async: false,
+        data: { id: <%= @item.id %>, max_id: max},
+        success: function(data){
+            $.each(data, function (key, text) {
+                $.each(text, function (index, value) {
+                    if (index === "id") {if (max < value) max = value;}
+                    if (index === "body") {body = value;}
+                    if (index === "created_at") {
+                        original = value;
+                        created_at = original.slice(0, 10) + " " + original.slice(11, 19)
+                    }
+                    if (index === "name") {$( ".comments").append("<div />", {'id': id}).append( "<table><tr><td><b><div>" + value + "</div></b><span>" + created_at + "</span></td></tr><tr><td>" + body + "</td></tr></table><br/>" );}});});}});
+    setTimeout(repeatRequest, 5000);};})
+</script>
 
 
 <%= form_with model: [@item, @comment] do |form| %>
-    <%= form.text_field :body %>
-    <%= form.submit "Comment" %>
+   <input type="text" class="form-control" placeholder=<%=t('ItSh.inComment')%> <%= form.text_field :body %></input>
+    <button style="margin-top:20px" type="submit" class="btn btn-info"><%=t('ItSh.btComment')%></button>
 <% end %>
 
 

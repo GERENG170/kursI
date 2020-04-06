@@ -1,0 +1,12 @@
+en:
+    activerecord:
+       models:
+         coll: 'Collection'
+       attributes:
+         coll:
+           title: 'Title'
+           body:  'Body'
+           all_topics: 'Topics'
+           image: 'Image'
+           name: 'Name'
+ 

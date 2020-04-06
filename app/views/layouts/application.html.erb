@@ -21,27 +21,19 @@
    
    
   </style>
-  <script src="./jquery.js"></script>
-    <script src="./mdb.js"></script>  
-    <script src="./bootstrap.js"></script>
-    <script src="./popper.js"></script>
-    <link rel="stylesheet" href="./mdb.css">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %> <%= stylesheet_link_tag 'https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <link href="https://fonts.googleapis.com/css?family=Anton|Play&display=swap" rel="stylesheet">
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+      <%= render 'home/style'%>
+    <%=render 'layouts/style'%>
+
+
   </head>
 
     
   
   <body >
- <nav style="width:100%" class="navbar navbar-expand-lg navbar-dark primary-color">
+ <nav style="width:100%;background: #4285F4 " class="navbar navbar-expand-lg navbar-dark primary-color">
 
   <!-- Navbar brand -->
-  <a class="navbar-brand" href="#">Navbar</a>
+  <a class="navbar-brand" <%=link_to 'iLearning', root_path %></a>
 
   <!-- Collapse button -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
@@ -55,20 +47,20 @@
     <!-- Links -->
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link"<%= link_to 'Home', root_path %></a>
+        <a class="nav-link"<%= link_to t('nav.Home'), root_path %></a>
           <span class="sr-only">(current)</span>
         </a>
         <% if user_signed_in?%>
       </li>
       <li class="nav-item">
-        <a class="nav-link" <%= link_to 'User Page', colls_path %> </a>
+        <a class="nav-link" <%= link_to t('nav.UsP'), colls_path %> </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" <%= link_to 'Go out', destroy_user_session_path, :method => :delete %> </a>
+        <a class="nav-link" <%= link_to t('nav.Out'), destroy_user_session_path, :method => :delete %> </a>
         <% else %>
       </li>
       <li class="nav-item">
-        <a class="nav-link" <%=link_to "Go", user_session_path%> </a>
+        <a class="nav-link" <%=link_to t('nav.Go'), user_session_path%> </a>
       </li>
       <% end %>
 
@@ -80,6 +72,12 @@
           <a class="dropdown-item" <%= link_to 'Home', root_path %></a>
           <a class="dropdown-item" <%= link_to 'User Page', colls_path %></a>
           <a class="dropdown-item" <%= link_to 'Go out', destroy_user_session_path, :method => :delete %></a>
+          <li class="nav-item<%=" active" if I18n.locale == :ru %>">
+        <%=link_to "Рус", {locale: :ru}, class: "nav-link" %>
+        </li>
+        <li class="nav-item<%=" active" if I18n.locale == :en %>">
+        <%=link_to "En", {locale: :en}, class: "nav-link" %>
+        </li>
         </div>
       </li>
 
@@ -87,8 +85,16 @@
     <!-- Links -->
 
     <form class="form-inline">
-      <div class="md-form my-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+      <div class="md-form my-0 d-flex align-items-center">
+
+
+      <%= form_tag colls_path, :method => 'get' do%>
+        <input class="form-control mr-sm-2" type="text" placeholder=<%=t('nav.Search')%> aria-label="Search"<%=text_field_tag :search %></input>
+        
+        <p class="m-0">
+      <%= submit_tag t('nav.btSearch'), class:"btn btn-info", style:"margin-left: 45px" %>
+</p>
+<%end%>
       </div>
     </form>
   </div>

@@ -2,18 +2,13 @@
 .fieldimage{
  height:100px;
  width:400px;
- background-color: #cccccc;
- border: 10px ;
- border-color: black;
- 
-
+ border: 2px black dotted;
 }
+
 </style>
 
-<script src="mdb.js"></script>
-<script src="jquery.js"></script>
-<script src="bootstrap.js"></script>
-<script src="popper.js"></script>
+     <%= render 'home/style'%>
+    <%=render 'layouts/style'%>
 
     
 
@@ -31,28 +26,32 @@
   <% end %>
 
    <div class="form-group">
-   <%= form.select :all_topics, options_for_select([["Select topic", ""], "Auto", "Work", "Beverages", "Books", "Minerals","
-Animals", "Art","Clothing"]), :class => 'form-control' %>
+   <%=form.label :all_topics %>
+    <select class="form-control form-control-lg" <%= form.select :all_topics, options_for_select([[ t('common.selectT'), ""], t('common.sAuto'), t('common.sWork'),t('common.sBeverages'),t('common.sBooks'), t('common.sMinerals'),
+    t('common.sAnimals'),t('common.sArt'),t('common.sClothing')]), :class => 'form-control form-control-lg' %></select>
   </div>
+
 
   <div class="form-group">
-     <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" placeholder="name" <%= form.text_area :title %></textarea>
+    <%=form.label :title %>
+     <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"  <%= form.text_area :title %></textarea>
   </div>
 
-  <div class="form-group formimage">
-  
+
+  <div class="form-group formimage">  
+    <%=form.label :image %>
    <input class="fieldimage" <%=form.file_field :image%></input>
   </div>
-
+   
   <div class="form-group">
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="body" <%= form.text_area :body %></textarea>
+  <%=form.label :body%>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"  <%= form.text_area :body %></textarea>
   </div>
- 
 
 
   <div class="form-group">
      
-     <button type="submit" class="btn btn-primary btn-lg btn-block" >Create collection</button>
+     <button type="submit" class="btn btn-primary btn-lg btn-block" ><%=t('common.createC')%></button>
      
   </div>
 <% end %>

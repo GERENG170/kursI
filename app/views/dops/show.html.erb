@@ -1,0 +1,28 @@
+
+ 
+ <h2>
+ <%= @dop.name %>
+ </h2>
+
+ <p>
+ <%= @dop.tfield %>
+ </p>
+
+
+
+
+
+   <%= form_with model:[ @item, @dop.dopplaces.build ] do |form| %>
+  <p>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
+  </p>
+    <%= hidden_field_tag :id, @dop.coll_id%>
+  <p>
+    <%= form.submit %>
+    </p>
+    <%end%>
+
+
+   
+

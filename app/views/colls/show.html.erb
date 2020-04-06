@@ -1,4 +1,5 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+ <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <style>
 .box1 { 
        background: #f0f0f0; 
@@ -30,6 +31,18 @@
    .btn-item {
       left: 10px;  
    }
+   .fieldimage{
+     display: flex;
+    margin-top: 10px;
+     border: 2px black dotted;
+ height:100px;
+ width:400px;
+ }
+
+ .iteminfo{
+   font-size:20px;
+   color:black;
+ }
    
  
        </style>
@@ -41,7 +54,12 @@
        
 <div  class="box1">
 
+<div class="alert alert-dark" role="alert">
+  <%=t('showC.Topic')%><%=@coll.all_topics%>
+</div>
+
 <p id="notice"><%= notice %></p>
+<div class="d-flex flex-column">
 
 <% if @coll.image.attached?%>
 
@@ -53,47 +71,32 @@
 
 
 
-<h1>
-  <strong><%= @coll.title %>:</strong>
+<h1 class="h-100 mt-3">
+  <strong><%= markdown @coll.title %>:</strong>
 
-  <%= @coll.body %>
+  <%=markdown @coll.body %>
 
-  <p>Topic:<%=@coll.all_topics%></p>
 </h1>
 
-
-
-<% if user_signed_in?%>
-<a style="right: 50px;top: 210px;position: absolute; color: white;"  class="btn btn-dark", color="white"<%= link_to 'Back', colls_path %> </a>
-
-<% if current_user.admin? || current_user.id == @coll.user_id %> 
-<a style="right: 198px;top: 210px;position: absolute; color: white;" class="btn btn-info", color="white"<%= link_to 'Edit', edit_coll_path(@coll) %> </a>
-<a style="right: 276px;top: 210px;position: absolute; color: white;" class="btn btn-danger", color="white"<%= link_to 'Delete collection', @coll_path, method: :delete %></a>
- <%end%>
-  <%end%>
-<a  class="btn btn-info btn-add" >Add field</a>
-
-
- 
- <%= form_with model: [@coll, @dop] do |form| %>
-    <%= form.text_field :tfield %>
-    <%= form.text_field :name %>
-    <%= form.submit "Dop" %> 
- <% end %>
-
- <div id="dop_pane">
- <% @dops.each do |dop|%>
-<%= render 'dops/dop', dop: dop%>
-<% end %>
 </div>
 
 
 
-<script>
-$( ".btn-add" ).click(function() {
-  $( ".form_add_field" ).slideToggle( "slow" );
-});
-</script>
+<% if user_signed_in?%>
+<a style="right: 50px;top: 210px;position: absolute; color: white;"  class="btn btn-dark", color="white"<%= link_to t('showC.Back'), colls_path %> </a>
+
+<% if current_user.admin? || current_user.id == @coll.user_id %> 
+<a style="right: 198px;top: 210px;position: absolute; color: white;" class="btn btn-info", color="white"<%= link_to t('showC.Edit'), edit_coll_path(@coll) %> </a>
+<a style="right: 324px;top: 210px;position: absolute; color: white;" class="btn btn-danger", color="white"<%= link_to t('showC.Delete'), @coll_path, method: :delete %></a>
+
+ <%end%>
+  <%end%>
+
+
+
+
+
+
 
  
   <table  class="table table-striped w-auto">
@@ -102,15 +105,18 @@ $( ".btn-add" ).click(function() {
   <tbody>
     <tr> 
     <% @coll.items.each do |item|%>
-      <td><%=item.id%></th>
-      <td><%= link_to item.title, coll_item_path(item)%></td>
-      <td><%=link_to item.body , coll_item_path(item)%></td>
+
+      <td><p class="iteminfo"><%=item.id%></p></th>
+      <td><p class="iteminfo"><%= item.title%></p></td>
+      <td><p class="iteminfo"><%=item.body %></p></td>
+      
       <td><%= item.created_at%></td>
       <% if user_signed_in?%>
      <% if current_user.admin? || current_user.id == @coll.user_id %> 
-      <td><%= link_to 'Destroy Item', [item.coll, item],
+      <td><a class="btn btn-outline-danger"<%= link_to t('showC.delIt'), [item.coll, item],
                method: :delete,
-               data: { confirm: 'Are you sure?' } %></td>
+               data: { confirm: 'Are you sure?' } %></a></td>
+               <td><a class="btn btn-outline-success"<%=link_to t('showC.shIt'),item_path(item) %> </a> </td>
     </tr>
     <% end %>
     <% end %>
@@ -122,21 +128,21 @@ $( ".btn-add" ).click(function() {
 
     <% if user_signed_in?%>
     <% if current_user.admin? || current_user.id == @coll.user_id %> 
-    <button  class="btn btn-info btn-item" >Create item</button>
+    <button  class="btn btn-info add-item" ><%=t('showC.CrIt')%></button>
 <%=  form_with(model: [ @coll, @coll.items.build ], local: true) do |form| %>
   <div class = 'form123'>
 <div class="form-group">
-  <%=form.file_field :image%>
+  <input  class="fieldimage" <%=form.file_field :image%></input>
   </div>
   <div class="input-group mb-3">
   <div class="input-group-prepend">
-    <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+    <span class="input-group-text" id="inputGroup-sizing-default"><%=t('showC.addTitle')%></span>
   </div>
      <textarea class="form-control" id="exampleFormControlTextarea1" rows="1" <%= form.text_field :title %></textarea>
   </div>
    <div class="input-group mb-3">
   <div class="input-group-prepend">
-    <span class="input-group-text" id="inputGroup-sizing-default">Body</span>
+    <span class="input-group-text" id="inputGroup-sizing-default"><%=t('showC.addBody')%></span>
   </div>
   <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" <%= form.text_area :body %></textarea>
   </div>
@@ -144,30 +150,33 @@ $( ".btn-add" ).click(function() {
    <p>
    <div class="input-group mb-3">
   <div class="input-group-prepend">
-    <span class="input-group-text" id="inputGroup-sizing-default">Tags</span>
+    <span class="input-group-text" id="inputGroup-sizing-default"><%=t('showC.addTags')%></span>
   </div>
   <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"  <%= form.text_field :all_tags%></textarea>
 </div>
 
-<strong> Additional fields</strong>
 
 
-  
+
+
+
 
 
 
    <p>
-<button type="submit" class="btn btn-success">Create</button>
+<button type="submit" class="btn btn-success "><%=t('showC.btCrIt')%></button>
 </p>
 </div>
 <% end %>
 <% end %>
 <script>
-$( "button" ).click(function() {
+$( ".add-item" ).click(function() {
   $( ".form123" ).slideToggle( "slow" );
 });
 </script>
  <% end %>
+
+ <div id="show-dop" style="display:none;" > </div>
 
 
 </div>

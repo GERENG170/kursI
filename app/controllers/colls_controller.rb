@@ -6,7 +6,7 @@ class CollsController < ApplicationController
   # GET /colls
   # GET /colls.json
   def index
-    @colls = Coll.all
+    @colls = Coll.search(params[:search])
   end
 
   # GET /colls/1

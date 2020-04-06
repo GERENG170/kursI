@@ -1,0 +1,12 @@
+ru:
+   activerecord:
+      models:
+        coll: 'Коллекция'
+      attributes:
+        coll:
+          title: 'Название'
+          body:  'Описание'
+          all_topics: 'Тема'
+          image: 'Изображение'
+          name: 'Название'
+

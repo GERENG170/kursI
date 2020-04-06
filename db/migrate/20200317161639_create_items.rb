@@ -4,7 +4,7 @@ class CreateItems < ActiveRecord::Migration[6.0]
       t.string :title
       t.text :body
       t.references :coll, null: false, foreign_key: true
-
+      t.boolean :searching, default: false
       t.timestamps
     end
   end

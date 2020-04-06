@@ -12,6 +12,10 @@ gem 'puma', '~> 4.1'
 
 gem 'devise'
 
+gem 'omniauth-github'
+
+gem 'pygments.rb', '~>1.2.1'
+gem 'redcarpet', '~>3.5.0'
 # Use SCSS for stylesheets
 gem 'sass-rails'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
@@ -19,16 +23,21 @@ gem 'coffee-rails'
 
 gem 'acts_as_votable'
 
+gem 'elasticsearch-model', github: 'elastic/elasticsearch-rails', branch: '5.x'
+gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails', branch: '5.x'
+
 gem 'jquery-rails'
 
 gem 'activestorage-dropbox'
 
-gem 'omniauth'
 
+
+gem 'omniauth'
+gem 'pry'
 gem 'jquery-ui-rails'
 
 gem 'omniauth-facebook'
-gem 'omniauth-twitter'
+
 
 gem 'haml-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks

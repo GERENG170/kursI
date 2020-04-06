@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_01_020546) do
+ActiveRecord::Schema.define(version: 2020_04_05_081851) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2020_04_01_020546) do
   create_table "colls", force: :cascade do |t|
     t.string "title"
     t.text "body"
+    t.boolean "searching", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
@@ -54,9 +55,19 @@ ActiveRecord::Schema.define(version: 2020_04_01_020546) do
     t.integer "item_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.text "user_id"
+    t.integer "user_id"
+    t.integer "user_email_id"
     t.index ["item_id"], name: "index_comments_on_item_id"
+    t.index ["user_email_id"], name: "index_comments_on_user_email_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "dopplaces", force: :cascade do |t|
+    t.string "body"
+    t.integer "dop_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dop_id"], name: "index_dopplaces_on_dop_id"
   end
 
   create_table "dops", force: :cascade do |t|
@@ -74,6 +85,7 @@ ActiveRecord::Schema.define(version: 2020_04_01_020546) do
     t.string "title"
     t.text "body"
     t.integer "coll_id", null: false
+    t.boolean "searching", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["coll_id"], name: "index_items_on_coll_id"
@@ -121,6 +133,7 @@ ActiveRecord::Schema.define(version: 2020_04_01_020546) do
     t.boolean "admin", default: false
     t.string "provider"
     t.string "uid"
+    t.boolean "deactivated", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -143,6 +156,7 @@ ActiveRecord::Schema.define(version: 2020_04_01_020546) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "items"
+  add_foreign_key "dopplaces", "dops"
   add_foreign_key "dops", "colls"
   add_foreign_key "items", "colls"
   add_foreign_key "taggings", "items"

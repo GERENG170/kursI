@@ -1,0 +1,49 @@
+  <style>
+   .box1 { 
+       background: #f0f0f0; 
+      
+       padding: 40px; 
+    
+       margin: 0px;
+       margin-top:80px;
+       box-shadow: 0 0 10px black ;  }
+           .card {
+      display:inline-block;
+      margin-left:60px;
+      transition: .5s;
+      box-shadow: 0 0 10px black; 
+      margin-top: 50px;} 
+    .card:hover{
+        transform: translate(-10px,-10px);
+        box-shadow: 10px 10px 15px ; }
+        .result {
+            margin-left:50%;
+        }
+     
+   
+
+   </style>
+
+<%=render 'layouts/style'%>
+<%=render 'home/style'%>
+
+   <div class='box1'>
+
+   <h1 class="result"><%=t('serchTG.Res')%></h1>
+
+<a class="btn btn-dark" <%= link_to t('serchTG.Back'), root_path %></a>
+
+<h1><<%= @tag.name %>></h1>
+
+<% if @tag.items.empty? %>
+<h2>No items</h2>
+<% else %>
+<%= render 'items/item' %>
+<% end %>
+
+
+
+
+</div>
+
+

@@ -4,7 +4,7 @@
       
        padding: 40px; 
        height: 4000px;
-       margin: 0px;
+        
        margin-top:80px;
        box-shadow: 0 0 10px black ;  }
 
@@ -22,32 +22,45 @@
        .userinfo {
               background-color: #d8d8d8;
               width: 300px;
-              margin-left: 800px;
-             
+              margin-left: 200px;    
        }
+        .info {
+    
+    padding: 10px;
+    word-wrap:break-word;
+    display: block;
+    margin-left: 100px;
+
+    font-family: 'Anton', sans-serif;
+    font-family: 'Play', sans-serif;
+    font-size: 30px;
+   
+     
+
+   }
      
 
        </style>
 
+     <%= render 'home/style'%>
+
+
        <div class="box1">
-<div class="userinfo">
-<P>
-<%= @user.id %>
-</p>
-<P>
-<%= @user.name %>
-</P>
-<P>
-<%= @user.email %>
-</P>
-<P>
-<%= @user.created_at %>
-</P>
-<P>
-<%= @user.updated_at %>
-</P>
-</div>
-     <% @colls = Coll.all%>
+  <p class='info'><%=t('shUAd.id')%>
+  <%= @user.id %>
+ </p>
+  <P class='info'><%=t('shUAd.email')%>
+  <%= @user.email %>
+  </P>
+  <P class='info'><%=t('shUAd.data')%>
+  <%= @user.created_at %>
+  </P>
+  <P class='info'><%=t('shUAd.data2')%>
+  <%= @user.updated_at %>
+  </P>
+
+  
+      <% @colls = Coll.all%>
       <% @colls.each do |coll| %>
    <div class="card" style="width : 18rem;">
          <% if coll.image.attached?%>
@@ -55,7 +68,7 @@
           <% end %>
    <div class="card-body">
           <h5 class="card-title"><%=coll.title%></h5>
-          <a class="btn btn-primary"<%= link_to 'Show', coll_path(coll) %>  </a> 
+          <a class="btn btn-primary"<%= link_to t('shUAd.clsh'), coll_path(coll) %>  </a> 
                     <%=link_to like_coll_path(coll),class: "like", method: :put do %>
            <button type="button" class="btn btn-info" aria-label="left Align">
            <span class="glyphicon glyphicon-thumbs-up glyphicon-align-center" aria-hidden="true"></span>
@@ -63,7 +76,7 @@
            </button>
            <% end %>
              <%=link_to unlike_coll_path(coll),class: "like", method: :put do %>
-           <button type="button" class="btn btn-danger" aria-label="left Align">
+           <button type="button" class="btn btn-dark" aria-label="left Align">
            <span class="glyphicon glyphicon-thumbs-up glyphicon-align-center" aria-hidden="true"></span>
            <span class="badge"><%=coll.get_downvotes.size%></span>
            </button>

@@ -3,7 +3,8 @@ class ItemsController < ApplicationController
     @items = Item.all
   end
   def show
-     @item = Item.find(params[:coll_id])
+    @tags = Tag.all
+     @item = Item.find(params[:id])
      @comment = Comment.new
      @comments = @item.comments.order("adsa")
   end
@@ -23,7 +24,7 @@ class ItemsController < ApplicationController
     
       private
         def item_params
-          params.require(:item).permit(:title, :body, :all_tags, :image)
+          params.require(:item).permit(:title, :body, :all_tags, :image, :tag)
         end
     end
 

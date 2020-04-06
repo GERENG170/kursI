@@ -17,32 +17,89 @@
     .card:hover{
         transform: translate(-10px,-10px);
         box-shadow: 10px 10px 15px ; }
+        .alltags{
+          margin-left:50%;
+        }
       
 </style>
-   <div class="box1">    
+
+
+
+
+
+
+  
+   <div class="box1">  
+    
+   
+
+   <div class="alert alert-success" role="alert">
+    <h4 class="alltags"><%= t('home.allT') %></h4>
+ 
+     
+    <% tag_cloud(Tag.counts) do |tag| %>
+    <%= link_to tag.name, tag_path(tag.name) %>
+   <%end%>
+
+
+   
+
+   </div>
+    <div>
+    <h2><%= t('home.lastI') %></h2>
+  
+  <% @items.each do |item|%>
+<div class="card mb-3" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+    <% if item.image.attached?%>
+      <img class="card-img-top"<%=image_tag(item.image)%>
+      <%end%>
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title"><%=item.title%></h5>
+        <p class="card-text"><%=item.body%></p>
+        <p class="card-text"><%= t('home.cOll')%><small class="text-muted"><%=item.coll.title %></small></p>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<%end%>
+</div>
+
+<div>
+<h2><%= t('home.Coll')%></h2>
      <% @colls.each do |coll| %>
-          
+      <% if coll%>
    <div class="card" style="width : 18rem;">
          <% if coll.image.attached?%>
           <img class="card-img-top"<%=image_tag(coll.image)%>
           <% end %>
    <div class="card-body">
           <h5 class="card-title"><%=coll.title%></h5>
-          <a class="btn btn-primary"<%= link_to 'Show', coll_path(coll) %>  </a> 
+         
           <%=link_to like_coll_path(coll),class: "like", method: :put do %>
            <button type="button" class="btn btn-info" aria-label="left Align">
            <span class="glyphicon glyphicon-thumbs-up glyphicon-align-center" aria-hidden="true"></span>
            <span class="badge"><%=coll.get_upvotes.size%></span>
            </button>
            <% end %>
+           
              <%=link_to unlike_coll_path(coll),class: "like", method: :put do %>
-           <button type="button" class="btn btn-danger" aria-label="left Align">
+           <button type="button" class="btn btn-dark" aria-label="left Align">
            <span class="glyphicon glyphicon-thumbs-up glyphicon-align-center" aria-hidden="true"></span>
            <span class="badge"><%=coll.get_downvotes.size%></span>
            </button>
            <% end %>
+            <a class="btn btn-primary"<%= link_to t('home.ShowC'), coll_path(coll) %>  </a> 
+       </div>    
 </div> 
-</div>
+
 <%end%>
-  
+<% end %>
+  </div>
 

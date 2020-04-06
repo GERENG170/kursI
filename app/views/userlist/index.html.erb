@@ -1,4 +1,5 @@
 <style> 
+
   .box1 { 
        background: #f0f0f0; 
        
@@ -13,29 +14,40 @@
 </style>
 
 
+
+
 <div class="box1">
 <table  class="table table-hover">
 <thead >
       <tr>       
-        <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Create Data</th>
-        <th>Last Updated</th>
-        <th>Delete<th>         
+        <th><%=t('Ul.id')%></th>
+        <th><%=t('Ul.Name')%></th>
+        <th><%=t('Ul.Email')%></th>
+        <th><%=t('Ul.Data')%></th>
+        <th><%=t('Ul.Data2')%></th>
+        <th><%=t('Ul.Delete')%></th>   
+         <th><%=t('Ul.AddAd')%></th>   
+         <th><%=t('Ul.Page')%></th>
+    
        </thead>
 <%= @users = User.all%>
 <% @users.each do |user| %>  
 <tbody>
-      <tr>
-        <td><%=link_to user.id, user_path(user)%></td>  
+
+        <td><%= user.id%></td>  
         <td><%=user.name%></td>    
         <td><%=user.email%></td>
         <td><%=user.created_at%></td>
         <td><%=user.updated_at%></td>
-        <td><a class="btn btn-outline-danger"<%=link_to "Delete", user_path_path(user),  method: :delete %> </a></td>  
+        <td><a class="btn btn-outline-danger"<%=link_to t('Ul.usDel'), user_path(user),  method: :delete %> </a></td>  
+        <td><a class="btn btn-primary"<%= link_to t('Ul.usAdmin'), update_users_path(user), :method => :put %></a> </td> 
+        <td><a class="btn btn-primary"<%= link_to t('Ul.usPage'), user_path(user) %></a> </td> 
+
      </tr> 
      <%end%>
+
+      
+
 </table>
 <br>
 </div>
