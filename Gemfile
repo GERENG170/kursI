@@ -15,7 +15,7 @@ gem 'devise'
 gem 'omniauth-github'
 
 gem 'pygments.rb', '~>1.2.1'
-gem 'redcarpet', '~>3.5.0'
+gem 'redcarpet', '~>3.5.1'
 # Use SCSS for stylesheets
 gem 'sass-rails'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
